@@ -161,8 +161,8 @@ void loop()
         if (success)
         {
             Serial.println("");
-            Serial.print("Code is : ");
-            lcd.print("Code is : ");
+            Serial.print("Code clef : ");
+            lcd.print("Code clef: ");
 
             for (int i = 0; i < 10; i += 2)
             {
@@ -170,6 +170,18 @@ void loop()
                 lcd.print(decode_2(E[i], E[i + 1]));
             }
             Serial.println("");
+            Serial.print("Code reco : ");
+            Serial.print(bits[0][1]);
+            Serial.print(bits[0][2]);
+            Serial.print(bits[0][3]);
+            Serial.println(bits[0][4]);
+
+            lcd.setCursor(0, 1);
+            lcd.print("Code reco: ");
+            lcd.print(bits[0][1]);
+            lcd.print(bits[0][2]);
+            lcd.print(bits[0][3]);
+            lcd.print(bits[0][4]);
         }
         else
         {
