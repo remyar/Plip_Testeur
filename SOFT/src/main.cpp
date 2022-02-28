@@ -40,7 +40,14 @@ void setup()
 
     lcd.begin(16, 2);
     lcd.clear();
-
+    lcd.setCursor(0, 0);
+    lcd.print("    GoodRace    ");
+    Serial.println("GoodRace");
+    lcd.setCursor(0, 1);
+    lcd.print("  Plip Testeur  ");
+    Serial.println("Plip Testeur");
+    delay(5000);
+    lcd.clear();
     nbBits = 0;
     frameNumber = 0;
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>C:\Users\FRREMARN\Documents\Plip_Testeur\PCB\key\plip\plip.kicad_sch</source>
+    <date>10/01/2022 13:56:38</date>
+    <tool>Eeschema (6.0.0)</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>plip.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components/>
+  <libparts>
+    <libpart lib="test" part="35YXJ470M10x16">
+      <docs>https://datasheet.lcsc.com/lcsc/1809050158_Rubycon-35YXJ470M10x16_C88732.pdf</docs>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">35YXJ470M10x16</field>
+        <field name="Footprint">test:35YXJ470M10x16</field>
+        <field name="Datasheet">https://datasheet.lcsc.com/lcsc/1809050158_Rubycon-35YXJ470M10x16_C88732.pdf</field>
+        <field name="LCSC Part Number">C88732</field>
+        <field name="Manufacturer">Rubycon</field>
+        <field name="Package">Radial Leaded,10x16mm</field>
+        <field name="Description">470uF 35V 10mm ±20% 16mm 5mm 10000hrs@105℃ Radial Leaded,10x16mm Aluminum Electrolytic Capacitors - Leaded ROHS</field>
+        <field name="LCSC Part Number_1">C88732</field>
+        <field name="Package_1">Radial Leaded,10x16mm</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="unspecified"/>
+        <pin num="2" name="2" type="unspecified"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="test">
+      <uri>C:\Users\FRREMARN\Documents\Plip_Testeur\PCB\key\plip/test.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets/>
+</export>

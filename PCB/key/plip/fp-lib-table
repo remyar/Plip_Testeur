@@ -1,3 +1,5 @@
 (fp_lib_table
-  (lib (name PIC12F675-I_SN)(type Legacy)(uri ${KIPRJMOD}/PIC12F675-I_SN.mod)(options "")(descr ""))
+  (lib (name "Package_DIP")(type "KiCad")(uri "${KIPRJMOD}/Package_DIP.pretty")(options "")(descr ""))
+  (lib (name "test")(type "KiCad")(uri "${KIPRJMOD}/test.pretty")(options "")(descr ""))
+  (lib (name "librarie")(type "KiCad")(uri "${KIPRJMOD}/librarie.pretty")(options "")(descr ""))
 )

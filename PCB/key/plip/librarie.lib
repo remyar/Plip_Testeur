@@ -1,0 +1,27 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# 35YXJ470M10x16
+#
+#
+# 35YXJ470M10x16
+#
+DEF 35YXJ470M10x16 C 0 5 Y Y 1 F N
+F0 "C" 0 100 50 H V C CNN
+F1 "35YXJ470M10x16" 0 -100 50 H V C CNN
+F2 "librarie:35YXJ470M10x16" 0 100 50 V I C CNN
+F3 "https://datasheet.lcsc.com/lcsc/1809050158_Rubycon-35YXJ470M10x16_C88732.pdf" 0 100 50 V I C CNN
+F4 "C88732" 0 100 50 V I C CNN "LCSC Part Number"
+F5 "Rubycon" 0 100 50 V I C CNN "Manufacturer"
+F6 "Radial Leaded,10x16mm" 0 100 50 V I C CNN "Package"
+F7 "470uF 35V 10mm ±20% 16mm 5mm 10000hrs@105℃ Radial Leaded,10x16mm Aluminum Electrolytic Capacitors - Leaded ROHS" 0 100 50 V I C CNN "Description"
+F8 "C88732" 3050 -700 50 H I L CNN "LCSC Part Number"
+F9 "Radial Leaded,10x16mm" 3050 -700 50 V I C CNN "Package"
+DRAW
+X 2 1 150 0 100 L 50 50 1 1 U
+X 2 2 -150 0 100 R 50 50 1 1 U
+ENDDRAW
+ENDDEF
+#
+#
+#End Library

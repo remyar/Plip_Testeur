@@ -1,3 +1,4 @@
 (sym_lib_table
-  (lib (name PIC12F675-I_SN)(type Legacy)(uri ${KIPRJMOD}/PIC12F675-I_SN.lib)(options "")(descr ""))
+  (lib (name "test")(type "KiCad")(uri "${KIPRJMOD}/test.kicad_sym")(options "")(descr ""))
+  (lib (name "4xxx")(type "KiCad")(uri "${KIPRJMOD}/4xxx.kicad_sym")(options "")(descr ""))
 )
