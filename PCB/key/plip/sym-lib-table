@@ -1,4 +1,9 @@
 (sym_lib_table
+<<<<<<< Updated upstream
   (lib (name "test")(type "KiCad")(uri "${KIPRJMOD}/test.kicad_sym")(options "")(descr ""))
   (lib (name "4xxx")(type "KiCad")(uri "${KIPRJMOD}/4xxx.kicad_sym")(options "")(descr ""))
+=======
+  (lib (name 1639594553586)(type Legacy)(uri D:/_DEV_/DEV_KICAD/LCSC2kicad/1639594553586.lib)(options "")(descr ""))
+  (lib (name 1639595129068)(type Legacy)(uri D:/_DEV_/DEV_KICAD/LCSC2kicad/1639595129068.lib)(options "")(descr ""))
+>>>>>>> Stashed changes
 )
