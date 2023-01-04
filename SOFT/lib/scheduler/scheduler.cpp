@@ -177,7 +177,7 @@ void SCHEDULER_AddTask(String name, PTR_TASK_INIT_FUNC initFunc, PTR_TASK_UPDATE
     nbTask++;
     if (nbTask > MAX_TASKS)
     {
-        Serial.print("SCHEDULER no add Task is possible");
+       // Serial.print("SCHEDULER no add Task is possible");
         while (1){ }
     }
 }

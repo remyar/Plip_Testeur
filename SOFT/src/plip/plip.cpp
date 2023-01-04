@@ -12,7 +12,7 @@
 //                                        FICHIERS INCLUS                                         //
 //================================================================================================//
 
-#include "board.h"
+#include "./plip.h"
 
 //================================================================================================//
 //                                            DEFINES                                             //
@@ -33,6 +33,12 @@
 //------------------------------------------------------------------------------------------------//
 //---                                         Privees                                          ---//
 //------------------------------------------------------------------------------------------------//
+static bool bits[3][24];
+volatile bool trigger = false;
+static uint16_t nbBits = 0;
+static uint8_t frameNumber = 0;
+static bool success = false;
+static unsigned long _ms = millis();
 
 //------------------------------------------------------------------------------------------------//
 //---                                        Partagees                                         ---//
@@ -45,31 +51,69 @@
 //------------------------------------------------------------------------------------------------//
 //---                                         Privees                                          ---//
 //------------------------------------------------------------------------------------------------//
-
-//--------------------------------------------------------------------------------------------------
-// FONCTION    : _InitClocks
-//
-// DESCRIPTION : Initialisation des clocks du micro
-//--------------------------------------------------------------------------------------------------
-static void _InitClocks(void)
+void _ISR() // ISR function excutes when push button at pinD2 is pressed
 {
+    trigger = true;
 }
 
-//--------------------------------------------------------------------------------------------------
-// FONCTION    : _InitGpio
-//
-// DESCRIPTION : Initiliasation des GPIO
-//--------------------------------------------------------------------------------------------------
-static void _InitGpio(void)
+int8_t decode(uint8_t idx)
 {
-    pinMode(GPIO_PIN_BUILTIN_LED, OUTPUT);
-    digitalWrite(GPIO_PIN_BUILTIN_LED, HIGH);
+    int8_t val = -1;
+    bool bit0 = bits[0][(idx * 2)];
+    bool bit1 = bits[0][(idx * 2) + 1];
 
-    pinMode(GPIO_PIN_BUTTON, INPUT_PULLUP);
-    pinMode(4, OUTPUT);
-    digitalWrite(4, LOW);
+    if ((bit0 == true) && (bit1 == false))
+    {
+        val = 0;
+    }
+    else if ((bit0 == true) && (bit1 == true))
+    {
+        val = 1;
+    }
 
-    pinMode(3, INPUT_PULLUP);
+    return val;
+}
+
+uint8_t decode_2(int8_t E0, int8_t E1)
+{
+    uint8_t val = 9;
+    if (E0 == 0 && E1 == 0)
+    {
+        val = 4;
+    }
+    else if (E0 == -1 && E1 == 0)
+    {
+        val = 1;
+    }
+    else if (E0 == 1 && E1 == 0)
+    {
+        val = 7;
+    }
+    else if (E0 == 0 && E1 == -1)
+    {
+        val = 3;
+    }
+    else if (E0 == -1 && E1 == -1)
+    {
+        val = 0;
+    }
+    else if (E0 == 1 && E1 == -1)
+    {
+        val = 6;
+    }
+    else if (E0 == 0 && E1 == 1)
+    {
+        val = 5;
+    }
+    else if (E0 == -1 && E1 == 1)
+    {
+        val = 2;
+    }
+    else if (E0 == 1 && E1 == 1)
+    {
+        val = 8;
+    }
+    return val;
 }
 
 //------------------------------------------------------------------------------------------------//
@@ -77,18 +121,67 @@ static void _InitGpio(void)
 //------------------------------------------------------------------------------------------------//
 
 //--------------------------------------------------------------------------------------------------
-// FONCTION    : BOARD_Init
+// FONCTION    : COMPC_TaskInit
 //
 // DESCRIPTION : Initialisation de la carte : GPIO, Clocks, Interruptions...
 //--------------------------------------------------------------------------------------------------
-void BOARD_Init(void)
+bool PLIP_TaskInit(void)
 {
-    //--- Initialisation des clocks
-    _InitClocks();
+    trigger = false;
+    success = false;
+    nbBits = 0;
+    frameNumber = 0;
+    _ms = millis();
 
-    //--- Initialisation des GPIO
-    _InitGpio();
+    attachInterrupt(digitalPinToInterrupt(3), _ISR, RISING);
+}
 
-    SERIAL_Init();
+bool PLIP_TaskRun(void)
+{
+    if (trigger == true)
+    {
+        trigger = false;
+        delayMicroseconds(1250);
+        bits[frameNumber][nbBits] = !trigger;
 
+        nbBits++;
+        if (nbBits >= 24)
+        {
+            nbBits = 0;
+            frameNumber++;
+        }
+        _ms = millis();
+        trigger = false;
+    }
+
+    if ((millis() - _ms) >= 100)
+    {
+        if (frameNumber >= 3)
+        {
+            success = true;
+            for (int i = 0; i < 24; i++)
+            {
+                if ((bits[0][i] != bits[1][i]) || (bits[0][i] != bits[2][i]) || (bits[1][i] != bits[2][i]))
+                {
+                    success = false;
+                }
+            }
+            
+            if ( success ){
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+uint16_t PLIP_GetCode(void){
+    uint16_t val = 0;
+    for (int i = 0; i < 10; i += 2)
+    {
+        val*=10;
+        val += decode_2(decode(i), decode(i+1));
+    }
+    return val;
 }

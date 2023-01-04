@@ -52,8 +52,6 @@ class DuinoShop_SSD1306 : public Adafruit_GFX
       void invertDisplay(bool invert) ;
       void clearDisplay(void) ;
       void drawPixel(int16_t x, int16_t y, uint16_t color) ;
-   //   void setRotation(uint8_t x) ;
-   //   uint8_t getRotation(void) ;
 };
 
 #endif /* _Duinoshop_SSD1306_128x64_I2C_ */

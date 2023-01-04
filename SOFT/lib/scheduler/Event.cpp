@@ -64,7 +64,7 @@ void FIFOEvent::push(s_EVENT data)
 s_EVENT FIFOEvent::peek()
 {
     if (numElements == 0){
-        Serial.println(F("Buffer empty"));
+        //Serial.println(F("Buffer empty"));
         s_EVENT e;
         e.type = 0;
         return e;  
@@ -78,7 +78,7 @@ s_EVENT FIFOEvent::pop()
 {
     if (numElements == 0)
     {
-        Serial.println(F("Buffer empty"));
+        //Serial.println(F("Buffer empty"));
         s_EVENT e;
         e.type = 0;
         return e;
@@ -201,4 +201,14 @@ void EVENT_Push(uint8_t TaskId, uint32_t type, void *pValue)
             */
         }
     }
+}
+
+bool EVENT_HasEvent(void){
+    bool val = false;
+    for (int i = 0; i < MAX_TASKS; i++){
+        if ( tasks[i].events.size() > 0 ){
+            val = true;
+        }
+    }
+    return val;
 }

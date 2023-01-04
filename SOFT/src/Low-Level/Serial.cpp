@@ -57,27 +57,27 @@
 //--------------------------------------------------------------------------------------------------
 void SERIAL_Init(void)
 {
-    Serial.begin(115200);
-    Serial.println();
+   // Serial.begin(115200);
+   // Serial.println();
 }
 
 void SERIAL_PutString(String str){
-    Serial.println(str);
+   // Serial.println(str);
 }
 
 void SERIAL_Putc(unsigned char data)
 {
-    Serial.write(data);
+  //  Serial.write(data);
 }
 
 unsigned char SERIAL_Getc(void)
 {
-    if (Serial.available())
+   /* if (Serial.available())
     {
         return Serial.read();
-    }
+    }*/
 }
 
 bool SERIAL_Available(void){
-    return Serial.available();
+   // return Serial.available();
 }

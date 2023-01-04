@@ -81,5 +81,6 @@ public:
 void EVENT_None(uint8_t TaskId);
 void EVENT_Clear(uint8_t TaskId, uint32_t type);
 void EVENT_Push(uint8_t TaskId, uint32_t type, void *pValue);
+bool EVENT_HasEvent(void);
 
 #endif //--- EVENT_H

@@ -12,6 +12,8 @@
 //                                        FICHIERS INCLUS                                         //
 //================================================================================================//
 #include "./screen.h"
+#include "./keyboard/keyboard.h"
+#include "./plip/plip.h"
 
 //================================================================================================//
 //                                            DEFINES                                             //
@@ -104,6 +106,11 @@ bool SCREEN_TaskUpdate(void *p)
                _e_screen = SCREEN_MCU;
                break;
             }
+            case (SCREEN_PLIP_WAITING):
+            {
+               _e_screen = SCREEN_PLIP_WAITING;
+               break;
+            }
             case (SCREEN_MCU):
             {
                _e_screen = SCREEN_PLIP;
@@ -116,6 +123,11 @@ bool SCREEN_TaskUpdate(void *p)
             case (SCREEN_PLIP):
             {
                _e_screen = SCREEN_PLIP_WAITING;
+               break;
+            }
+            case (SCREEN_PLIP_WAITING):
+            {
+               _e_screen = SCREEN_PLIP;
                break;
             }
             case (SCREEN_MCU):
@@ -142,7 +154,7 @@ void SCREEN_TaskRun(void)
 {
 
    bool forceRefresh = false;
-   if ((_e_screen == SCREEN_BOOTING) && (millis() - _ms) >= 5000)
+   if ((_e_screen == SCREEN_BOOTING) && (millis() - _ms) >= 1000)
    {
       SCREEN_Change(SCREEN_PLIP);
    }
@@ -175,7 +187,16 @@ void SCREEN_TaskRun(void)
       }
       case ( SCREEN_PLIP_WAITING ):
       {
+         PLIP_TaskInit();
          DISPLAY_PLIPWaiting();
+         while ( PLIP_TaskRun() == false ){
+            KEYBOARD_TaskRun();
+            if ( EVENT_HasEvent() == true ){
+               return;
+            }
+         }
+
+         DISPLAY_PlipCode(PLIP_GetCode());
          break;
       }
       default:

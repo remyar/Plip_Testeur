@@ -123,3 +123,14 @@ void DISPLAY_PLIPWaiting(void)
 
     oled->display(); 
 }
+
+void DISPLAY_PlipCode(uint16_t code){
+    DuinoShop_SSD1306 * oled = OLED_Get();
+    oled->clearDisplay();
+
+    oled->setTextSize(2);
+
+    DISPLAY_TextCenter("Code", 16);
+    DISPLAY_TextCenter(String(code), 34);
+    oled->display(); 
+}

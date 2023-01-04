@@ -7,15 +7,14 @@
 // HISTORIQUE   :                                                                                 //
 //                                                                                                //
 //================================================================================================//
+#ifndef _PLIP_H_
+#define _PLIP_H_
 
-#ifndef _DISPLAY_H_
-#define _DISPLAY_H_
 
 //================================================================================================//
 //                                        FICHIERS INCLUS                                         //
 //================================================================================================//
 #include "../Low-Level/board.h"
-#include "./oled.h"
 
 //================================================================================================//
 //                                            DEFINES                                             //
@@ -29,7 +28,6 @@
 //                                      STRUCTURES ET UNIONS                                      //
 //================================================================================================//
 
-
 //================================================================================================//
 //                                VARIABLES ET FONCTION PARTAGEES                                 //
 //================================================================================================//
@@ -41,15 +39,8 @@
 //------------------------------------------------------------------------------------------------//
 //---                                        Fonctions                                         ---//
 //------------------------------------------------------------------------------------------------//
-void DISPLAY_Init(void);
-void DISPLAY_FillScreen(void);
-void DISPLAY_Booting(void);
-void DISPLAY_WifiDetails(void);
-void DISPLAY_Progress ( float value );
-void DISPLAY_MacAddress(void);
-void DISPLAY_PLIPMenu(void);
-void DISPLAY_MCUMenu(void);
-void DISPLAY_PLIPWaiting(void);
-void DISPLAY_PlipCode(uint16_t code);
+bool PLIP_TaskInit(void);
+bool PLIP_TaskRun(void);
 
+uint16_t PLIP_GetCode(void);
 #endif //--- _BOARD_
