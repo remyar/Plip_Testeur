@@ -2,9 +2,7 @@
 #include <Wire.h>
 #include <Adafruit_SSD1306.h>
 
-
-Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire,-1);
-
+Adafruit_SSD1306 display = Adafruit_SSD1306(128, 64, &Wire, -1);
 
 volatile bool trigger = false;
 uint16_t nbBits = 0;
@@ -18,6 +16,13 @@ String code = "";
 bool success = false;
 unsigned long time;
 uint8_t state = 0;
+
+enum
+{
+    NO_STATE = 0,
+
+};
+
 int8_t decode(uint8_t idx)
 {
     int8_t val = -1;
@@ -85,31 +90,33 @@ void _ISR() // ISR function excutes when push button at pinD2 is pressed
 
 void setup()
 {
+    pinMode(2, INPUT_PULLUP);
+    pinMode(4, INPUT_PULLUP);
     pinMode(3, INPUT_PULLUP);
     pinMode(12, OUTPUT);
     digitalWrite(12, LOW);
     // put your setup code here, to run once:
     attachInterrupt(digitalPinToInterrupt(3), _ISR, RISING);
 
-display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Address 0x3C for 128x32
-  display.clearDisplay();
-  display.display();
+    display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // Address 0x3C for 128x32
+    display.clearDisplay();
+    display.display();
 
-  // text display tests
- display.setCursor(0,16); 
- display.setTextSize(2);
-  display.setTextColor(SSD1306_WHITE);
- 
-  display.print("    Plip\n   Reader");
-/*   display.print("connected!");
-  display.println("IP: 10.0.1.23");
-  display.println("Sending val #0");
-  display.setCursor(0,0);*/
-  display.display(); // actually display all of the above
+    // text display tests
+    display.setCursor(0, 16);
+    display.setTextSize(2);
+    display.setTextColor(SSD1306_WHITE);
+
+    display.print("    Plip\n   Reader");
+    /*   display.print("connected!");
+      display.println("IP: 10.0.1.23");
+      display.println("Sending val #0");
+      display.setCursor(0,0);*/
+    display.display(); // actually display all of the above
 
     Serial.begin(115200);
 
-    Serial.println("GoodRace");
+    Serial.println("AR'Tech");
     Serial.println("Plip Testeur");
 
     trigger = false;
@@ -179,11 +186,11 @@ void loop()
             if (success)
             {
                 display.clearDisplay();
-                display.setCursor(0,0); 
+                display.setCursor(0, 0);
                 display.setTextSize(2);
                 display.print(" Code clef");
 
-                display.setCursor(0,24); 
+                display.setCursor(0, 24);
                 display.setTextSize(2);
                 display.print("   ");
                 for (int i = 0; i < 10; i += 2)
@@ -191,7 +198,7 @@ void loop()
                     display.print(decode_2(E[i], E[i + 1]));
                 }
 
-                display.setCursor(0,52); 
+                display.setCursor(0, 52);
                 display.setTextSize(1);
                 display.print("  Code reco : ");
                 display.print(bits[0][1]);
@@ -219,6 +226,27 @@ void loop()
             {
                 Serial.println("ERROR !!!");
             }
+        }
+
+        uint8_t val8 = digitalRead(2) << 1;
+        val8 |= digitalRead(4);
+
+        if (val8 == 0x1 || val8 == 0x2)
+        {
+            display.clearDisplay();
+            display.setCursor(0, 0);
+            display.setTextSize(2);
+            display.print(" Reception ");
+            display.setCursor(0, 32);
+            display.setTextSize(2);
+            display.print("  ");
+            if (val8 == 0x01){
+                display.print("ouvert");
+            }
+            else {
+                display.print("fermer");
+            }
+            display.display(); // actually display all of the above
         }
 
         nbBits = 0;
