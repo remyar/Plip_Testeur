@@ -108,6 +108,12 @@ void setup()
     display.setTextColor(SSD1306_WHITE);
 
     display.print("    Plip\n   Reader");
+
+    display.setCursor(32, 0);
+    display.setTextSize(1);
+    display.print("  AR' Tech");
+
+
     /*   display.print("connected!");
       display.println("IP: 10.0.1.23");
       display.println("Sending val #0");
