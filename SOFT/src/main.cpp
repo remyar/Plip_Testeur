@@ -88,6 +88,30 @@ void _ISR() // ISR function excutes when push button at pinD2 is pressed
     trigger = true;
 }
 
+void _PowerKey(bool val)
+{
+    pinMode(A1, OUTPUT);
+    digitalWrite(A1, val);
+}
+
+void _Rcos(bool val)
+{
+    pinMode(A0, OUTPUT);
+    digitalWrite(A0, val);
+}
+
+void _Prog(bool val)
+{
+    pinMode(10, OUTPUT);
+    digitalWrite(10, val);
+}
+
+void _SerClk(bool val)
+{
+    pinMode(9, OUTPUT);
+    digitalWrite(9, val);
+}
+
 void setup()
 {
     pinMode(2, INPUT_PULLUP);
@@ -113,7 +137,6 @@ void setup()
     display.setTextSize(1);
     display.print("  AR' Tech");
 
-
     /*   display.print("connected!");
       display.println("IP: 10.0.1.23");
       display.println("Sending val #0");
@@ -130,6 +153,29 @@ void setup()
     nbBits = 0;
     frameNumber = 0;
     _ms = millis();
+
+    //-- try programming key
+
+    _Prog(true);
+    _Rcos(false);
+    _SerClk(false);
+
+    _PowerKey(true);
+    delayMicroseconds(10000);
+
+    for (uint8_t i = 0; i < 24; i++)
+    {
+        _SerClk(true);
+
+        delayMicroseconds(10);
+        _SerClk(false);
+        delayMicroseconds(10);
+    }
+
+    delay(10);
+    _PowerKey(false);
+    _Prog(false);
+    pinMode(A0, INPUT);
 }
 
 void loop()
@@ -246,10 +292,12 @@ void loop()
             display.setCursor(0, 32);
             display.setTextSize(2);
             display.print("  ");
-            if (val8 == 0x01){
+            if (val8 == 0x01)
+            {
                 display.print("ouvert");
             }
-            else {
+            else
+            {
                 display.print("fermer");
             }
             display.display(); // actually display all of the above
